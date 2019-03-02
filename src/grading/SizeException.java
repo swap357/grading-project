@@ -1,5 +1,5 @@
 package grading;
 
-public class SizeException {
+public class SizeException extends Throwable{
 
 }
