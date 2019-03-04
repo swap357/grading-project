@@ -93,6 +93,10 @@ public class Gradient
 			// Display the final grade
 			System.out.println(courseGrade.toString());        
 		}
+		catch (SizeException se)
+		{
+			System.out.println("this needs to be updated");
+		}
 		catch (IllegalArgumentException iae)
 		{
 			// Should never get here since all keys should be valid
