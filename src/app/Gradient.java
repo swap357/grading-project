@@ -93,10 +93,6 @@ public class Gradient
 			// Display the final grade
 			System.out.println(courseGrade.toString());        
 		}
-		catch (SizeException se)
-		{
-			System.out.println("You entered too few valid grades.");
-		}
 		catch (IllegalArgumentException iae)
 		{
 			// Should never get here since all keys should be valid
