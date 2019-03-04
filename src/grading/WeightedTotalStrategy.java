@@ -15,7 +15,7 @@ public class WeightedTotalStrategy implements GradingStrategy {
 	public WeightedTotalStrategy(Map<String, Double> courseWeights) {
 		// TODO Auto-generated constructor stub
 		this.weights = new HashMap<String, Double>();
-		this.weights.putAll(weights);
+		this.weights.putAll(courseWeights);
 	}
 
 	@SuppressWarnings("unlikely-arg-type")
@@ -63,12 +63,13 @@ public class WeightedTotalStrategy implements GradingStrategy {
 				
 				//2.4.2. If the weight for a particular grade is unspecified(i.e NULL), then it must be assigned to 1.0
 				tempValue=Missing.doubleValue(tempValue);
-				
+							
 				//Calculating the weighted total
 				weightedTotal += tempWeight * tempValue;
 			}
 		}
-		return new Grade(Key,weightedTotal);
+	
+		return new Grade(Key, weightedTotal);
 	}
 
 }
