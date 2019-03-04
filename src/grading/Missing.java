@@ -1,19 +1,20 @@
 package grading;
 
-public class Missing 
+public final class Missing 
 {
-   private double missingValue=0.0;
+	//Attributes for the class Missing
+   private static double DEFAULT_MISSING_VALUE=0.0;
    
-   public double doubleValue(Double number)
+   public static double doubleValue(Double number)
    {
 	   if(number != null)
 	   {
 		   return number.doubleValue();
 	   }
-	   return missingValue;
+	   return DEFAULT_MISSING_VALUE;
    }
    
-   public double doubleValue(Double number,double missingValue)
+   public static double doubleValue(Double number,double missingValue)
    {
 	   if(number !=null)
 	   {

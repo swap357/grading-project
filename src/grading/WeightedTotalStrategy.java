@@ -1,11 +1,12 @@
 package grading;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class WeightedTotalStrategy implements GradingStrategy {
 	
-	public Map<String, Double> weights;
+	private Map<String, Double> weights;
 	public WeightedTotalStrategy()
 	{
 		weights=null;
@@ -13,7 +14,8 @@ public class WeightedTotalStrategy implements GradingStrategy {
 
 	public WeightedTotalStrategy(Map<String, Double> courseWeights) {
 		// TODO Auto-generated constructor stub
-		weights=courseWeights;
+		this.weights = new HashMap<String, Double>();
+		this.weights.putAll(weights);
 	}
 
 	@SuppressWarnings("unlikely-arg-type")
@@ -22,38 +24,42 @@ public class WeightedTotalStrategy implements GradingStrategy {
 		// TODO Auto-generated method stub
 		Missing missing=new Missing();
 		Grade grade=null;
+		Double weightedTotal = 0.0, tempWeight = 0.0, tempValue = 0.0;
+		
 		if(grades ==null || grades.isEmpty()) 
 		{
 			throw new SizeException();
-		}
-		else if(weights == null)
-		{
-			grade =new Grade(Key,1.0);
 		}
 		else
 		{
 			for (Grade g : grades) 
 			{
+				tempValue=g.getValue();
 				
-				if(weights.containsKey(g))
+				if(weights == null)
+				{
+					tempWeight = 1.0;
+				}
+				else
 				{		
-					Double weight=weights.get(Key);
-					if(weight==null)
-					{
-						
-						grade =  new Grade(Key,missing.doubleValue(weight, 1.0));
-					}
-					else if(weight <= 0.0)
-					{
-						grade = new Grade(Key,missing.doubleValue(null));
-					}
-					else if(g.getValue()==null)
-					{
-						grade = new Grade(Key,missing.doubleValue(g.getValue()));
-					}
+					tempWeight=weights.get(Key);
+					
+					//If the weight for a particular grade is unspecified, then it must be assigned to 1.0
+					tempValue=Missing.doubleValue(tempValue);
+
+					//Getting the weight for it's respective Grade object
+					tempWeight = weights.get(g.getKey());
+					
+					//If the weight for a particular grade is null, then a weight of 1.0 must be assigned
+					tempWeight = Missing.doubleValue(tempWeight, 1.0);
+					
+					//If the weight for a particular grade is negative, then a weight of 0.0 must be assigned
+					if(tempWeight < 0.0)
+						tempWeight = 0.0;
 					
 				}
-				
+				//Calculating the weighted total
+				weightedTotal += tempWeight * tempValue;
 			}
 		}
 		return grade;
