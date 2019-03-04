@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import app.Gradient;
@@ -49,6 +50,23 @@ class TestSuites {
 		assertEquals(expectedGrade, courseGrade.getValue(),"course grades");
 	}
 
-	
+	@Test//(expected = SizeException.class)
+	public void weightedTotalStrategyCalculate_NullGrade()
+	{
+		// Create the weights and strategy for the course grade
+				HashMap<String, Double> courseWeights = new HashMap<String, Double>();
+				courseWeights.put("PAs",     0.4);
+				courseWeights.put("HWs",     0.1);
+				courseWeights.put("Midterm", 0.2);
+				courseWeights.put("Final",   0.3);
+				GradingStrategy courseStrategy = new WeightedTotalStrategy(courseWeights);
+				
+				// Put all of the grades in a List
+				ArrayList<Grade> grades = null;
+				
+				Assertions.assertThrows(SizeException.class, () -> {
+					courseStrategy.calculate("Course Grade", grades);
+				  });
+	}
 
 }
