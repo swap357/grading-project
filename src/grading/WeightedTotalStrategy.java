@@ -22,8 +22,7 @@ public class WeightedTotalStrategy implements GradingStrategy {
 	@Override
 	public Grade calculate(String Key, List<Grade> grades) throws SizeException {
 		// TODO Auto-generated method stub
-		Missing missing=new Missing();
-		Grade grade=null;
+		
 		Double weightedTotal = 0.0, tempWeight = 0.0, tempValue = 0.0;
 		
 		if(grades ==null || grades.isEmpty()) 
@@ -42,8 +41,7 @@ public class WeightedTotalStrategy implements GradingStrategy {
 				}
 				else
 				{		
-					tempWeight=weights.get(Key);
-					
+							
 					//If the weight for a particular grade is unspecified, then it must be assigned to 1.0
 					tempValue=Missing.doubleValue(tempValue);
 
@@ -62,7 +60,7 @@ public class WeightedTotalStrategy implements GradingStrategy {
 				weightedTotal += tempWeight * tempValue;
 			}
 		}
-		return grade;
+		return new Grade(Key,weightedTotal);
 	}
 
 }
