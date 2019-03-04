@@ -16,6 +16,7 @@ public class WeightedTotalStrategy implements GradingStrategy {
 		weights=courseWeights;
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public Grade calculate(String Key, List<Grade> grades) throws SizeException {
 		// TODO Auto-generated method stub
@@ -29,31 +30,32 @@ public class WeightedTotalStrategy implements GradingStrategy {
 		{
 			grade =new Grade(Key,1.0);
 		}
-		
-		for (Grade g : grades) 
+		else
 		{
-			
-			if(weights.containsKey(g))
-			{		
-				Double weight=weights.get(Key);
-				if(weight==null)
-				{
+			for (Grade g : grades) 
+			{
+				
+				if(weights.containsKey(g))
+				{		
+					Double weight=weights.get(Key);
+					if(weight==null)
+					{
+						
+						grade =  new Grade(Key,missing.doubleValue(weight, 1.0));
+					}
+					else if(weight <= 0.0)
+					{
+						grade = new Grade(Key,missing.doubleValue(null));
+					}
+					else if(g.getValue()==null)
+					{
+						grade = new Grade(Key,missing.doubleValue(g.getValue()));
+					}
 					
-					grade =  new Grade(Key,missing.doubleValue(weight, 1.0));
-				}
-				else if(weight <= 0.0)
-				{
-					grade = new Grade(Key,missing.doubleValue(null));
-				}
-				else if(g.getValue()==null)
-				{
-					grade = new Grade(Key,missing.doubleValue(g.getValue()));
 				}
 				
 			}
-			
 		}
-		
 		return grade;
 	}
 
