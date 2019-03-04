@@ -35,6 +35,7 @@ public class WeightedTotalStrategy implements GradingStrategy {
 			{
 				tempValue=g.getValue();
 				
+				// 2.4.1.1. if weights null
 				if(weights == null)
 				{
 					tempWeight = 1.0;
@@ -42,18 +43,23 @@ public class WeightedTotalStrategy implements GradingStrategy {
 				else
 				{		
 							
-					//If the weight for a particular grade is unspecified, then it must be assigned to 1.0
+					//2.4.2. If the weight for a particular grade is unspecified(i.e NULL), then it must be assigned to 1.0
 					tempValue=Missing.doubleValue(tempValue);
 
 					//Getting the weight for it's respective Grade object
 					tempWeight = weights.get(g.getKey());
 					
-					//If the weight for a particular grade is null, then a weight of 1.0 must be assigned
-					tempWeight = Missing.doubleValue(tempWeight, 1.0);
-					
-					//If the weight for a particular grade is negative, then a weight of 0.0 must be assigned
-					if(tempWeight < 0.0)
+					if(tempWeight == null)
+					{
+						// 2.4.1.2. If the weight for a particular grade is null, then a weight of 1.0 must be assigned
+						tempWeight = Missing.doubleValue(tempWeight, 1.0);
+					}
+					else if(tempWeight < 0.0)
+					{
+						//2.4.1.3. If the weight for a particular grade is negative, then a weight of 0.0 must be assigned
 						tempWeight = 0.0;
+					}
+						
 					
 				}
 				//Calculating the weighted total
