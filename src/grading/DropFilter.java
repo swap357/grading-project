@@ -27,8 +27,7 @@ public DropFilter() {
 	@Override
 	public List<Grade> apply(List<Grade> pas) throws SizeException{
 		// TODO Auto-generated method stub
-		//Integer variable to determine the number of dropped elements
-				int drop = 0;
+						int drop = 0;
 				List<Grade> tempGradelist = new ArrayList<Grade>();
 			
 				if(this.c == true)	
@@ -36,7 +35,6 @@ public DropFilter() {
 				if(this.b == true)
 					drop++;
 				
-				//Will throw exception if list is null or empty
 				if(pas == null)
 					throw new SizeException();
 				else if(pas.size() <= drop)
@@ -54,10 +52,8 @@ public DropFilter() {
 						
 					}
 					
-					//Sorting the list w.r.t the values associated to the grades
 					Collections.sort(tempGradelist);
 		        
-					//If two elements are to be dropped
 					if(drop == 2) {
 						
 						tempGradelist.remove(0);
