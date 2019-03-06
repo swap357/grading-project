@@ -5,18 +5,16 @@ public class Grade {
 	private String key;
 	private Double value;
 	public Grade(String key) {
-		
+		this.key = key;
+		this.value = 0.0;
 	}
+	
 	public Grade(String key, Double v) {
 		// TODO Auto-generated constructor stub
 		this.key=key;
 		this.value=v;
 	}
-	public Grade(String key, double v) {
-		// TODO Auto-generated constructor stub
-		this.key=key;
-		this.value=v;
-	}
+	
 	public String getKey() {
 		return key;
 	}
@@ -29,6 +27,7 @@ public class Grade {
 	public void setValue(Double value) {
 		this.value = value;
 	}
+	
 	@Override
 	public String toString() {
 		return "Grade [key=" + key + ", value=" + value + "]";
