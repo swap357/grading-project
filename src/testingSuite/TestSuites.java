@@ -15,6 +15,7 @@ import grading.Grade;
 import grading.GradingStrategy;
 import grading.Missing;
 import grading.SizeException;
+import grading.TotalStrategy;
 import grading.WeightedTotalStrategy;
 
 class TestSuites {
@@ -39,10 +40,45 @@ class TestSuites {
 	}
 	
 	@Test
+	public void totalStrategyCalculate()
+	{
+			
+		TotalStrategy courseStrategy = new TotalStrategy();
+		ArrayList<Grade> hws = new ArrayList<Grade>();
+		for (int i=0; i<5; i++)
+		{
+			hws.add(new Grade("HW"+(i+1), (double) (i+1*10)));
+		}
+		
+		// Calculate the final grade
+		Grade courseGrade=null;
+		try {
+			courseGrade = courseStrategy.calculate("HW Grade", hws);
+			
+		} catch (SizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Double expectedGrade= 60.0;
+		assertEquals(expectedGrade, courseGrade.getValue(),"HW grades");
+	}
+
+	@Test//(expected = SizeException.class)
+	public void totalStrategyCalculate_NullGrade()
+	{
+		TotalStrategy courseStrategy = new TotalStrategy();
+		// Put all of the grades in a List
+		ArrayList<Grade> grades = null;
+		Assertions.assertThrows(SizeException.class, () -> {
+				courseStrategy.calculate("HW Grade", grades);
+			  });
+	}
+
+	@Test
 	public void weightedTotalStrategyCalculate()
 	{
-		
-		
+			
 		GradingStrategy courseStrategy = new WeightedTotalStrategy(courseWeights);
 		// Calculate the final grade
 		Grade courseGrade=null;
