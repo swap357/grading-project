@@ -69,9 +69,9 @@ class TestSuites {
 	{
 		TotalStrategy courseStrategy = new TotalStrategy();
 		// Put all of the grades in a List
-		ArrayList<Grade> grades = null;
+		ArrayList<Grade> hwGrade = null;
 		Assertions.assertThrows(SizeException.class, () -> {
-				courseStrategy.calculate("HW Grade", grades);
+				courseStrategy.calculate("HW Grade", hwGrade);
 			  });
 	}
 
@@ -131,6 +131,7 @@ class TestSuites {
 	@Test//(expected = SizeException.class)
 	public void weightedTotalStrategyCalculate_CourseWeightNull()
 	{
+		
 		GradingStrategy courseStrategy = new WeightedTotalStrategy();
 		// Calculate the final grade
 	    Grade courseGrade=null;
@@ -140,7 +141,7 @@ class TestSuites {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Double expectedGrade2= 136.5;
+		Double expectedGrade2= 298.0;
 		assertEquals(expectedGrade2, courseGrade.getValue(),"course grades");
 	}
 	
@@ -211,4 +212,16 @@ class TestSuites {
 		
 	}
 
+	@Test
+	public void dropFilterTestException()
+	{
+		DropFilter d = new DropFilter(true, false);
+				
+		ArrayList<Grade> eGrades =null;
+		
+		Assertions.assertThrows(SizeException.class, () -> {
+			d.apply(eGrades);
+		  });
+		
+	}
 }

@@ -14,7 +14,7 @@ public class TotalStrategy implements GradingStrategy {
 		Double grade_value = 0.0, total = 0.0;
 		
 		//Validate the list, it should not be null
-		if(grades.isEmpty() || grades == null) 
+		if(grades == null || grades.isEmpty() ) 
 		{		
 			throw new SizeException();
 		}
