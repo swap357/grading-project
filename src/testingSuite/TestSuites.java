@@ -19,62 +19,117 @@ import grading.WeightedTotalStrategy;
 
 class TestSuites {
 	
-	@Test
-	public void weightedTotalStrategyCalculate()
-	{
+	
+	HashMap<String, Double> courseWeights = new HashMap<String, Double>();
+	ArrayList<Grade> grades = new ArrayList<Grade>();
+			
+	public TestSuites() {
+		// TODO Auto-generated constructor stub
 		// Create the weights and strategy for the course grade
-		HashMap<String, Double> courseWeights = new HashMap<String, Double>();
-		//courseWeights.put("PAs",     null);
 		courseWeights.put("PAs",     0.4);
 		courseWeights.put("HWs",     0.1);
 		courseWeights.put("Midterm", 0.2);
 		courseWeights.put("Final",   0.3);
-		GradingStrategy courseStrategy = new WeightedTotalStrategy(courseWeights);
-		
-		//GradingStrategy courseStrategy = new WeightedTotalStrategy();
 		
 		// Put all of the grades in a List
-		ArrayList<Grade> grades = new ArrayList<Grade>();
-		//grades.add(new Grade("PAs", null));
 		grades.add(new Grade("PAs", 93.0));
 		grades.add(new Grade("HWs", 50.0));
 		grades.add(new Grade("Midterm",80.0));
 		grades.add(new Grade("Final",  75.0));
+	}
+	
+	@Test
+	public void weightedTotalStrategyCalculate()
+	{
 		
-		System.out.println("grades: "+grades);
+		
+		GradingStrategy courseStrategy = new WeightedTotalStrategy(courseWeights);
 		// Calculate the final grade
 		Grade courseGrade=null;
 		try {
 			courseGrade = courseStrategy.calculate("Course Grade", grades);
-			System.out.println("coures grades: "+courseGrade.getValue());
+			
 		} catch (SizeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		Double expectedGrade= 80.7;
-		System.out.println("coures grades: "+courseGrade.getValue());
 		assertEquals(expectedGrade, courseGrade.getValue(),"course grades");
 	}
 
 	@Test//(expected = SizeException.class)
 	public void weightedTotalStrategyCalculate_NullGrade()
 	{
-		// Create the weights and strategy for the course grade
-				HashMap<String, Double> courseWeights = new HashMap<String, Double>();
-				courseWeights.put("PAs",     0.4);
-				courseWeights.put("HWs",     0.1);
-				courseWeights.put("Midterm", 0.2);
-				courseWeights.put("Final",   0.3);
-				GradingStrategy courseStrategy = new WeightedTotalStrategy(courseWeights);
-				
-				// Put all of the grades in a List
-				ArrayList<Grade> grades = null;
-				
-				Assertions.assertThrows(SizeException.class, () -> {
-					courseStrategy.calculate("Course Grade", grades);
-				  });
+		GradingStrategy courseStrategy = new WeightedTotalStrategy(courseWeights);
+		// Put all of the grades in a List
+		ArrayList<Grade> grades = null;
+		Assertions.assertThrows(SizeException.class, () -> {
+				courseStrategy.calculate("Course Grade", grades);
+			  });
 	}
+	
+	@Test//(expected = SizeException.class)
+	public void weightedTotalStrategyCalculate_NullWeights()
+	{
+		courseWeights.put("PAs", null);
+		GradingStrategy courseStrategy = new WeightedTotalStrategy(courseWeights);
+		
+		//grades.add(new Grade("PAs", null));
+		// Calculate the final grade
+		Grade courseGrade=null;
+		try {
+			courseGrade = courseStrategy.calculate("Course Grade", grades);
+			
+		} catch (SizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Double expectedGrade= 136.5;
+		assertEquals(expectedGrade, courseGrade.getValue(),"course grades");
+		
+		
+	}
+	
+	@Test//(expected = SizeException.class)
+	public void weightedTotalStrategyCalculate_CourseWeightNull()
+	{
+		GradingStrategy courseStrategy = new WeightedTotalStrategy();
+		// Calculate the final grade
+	    Grade courseGrade=null;
+		try {
+			courseGrade = courseStrategy.calculate("Course Grade", grades);
+		} catch (SizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Double expectedGrade2= 136.5;
+		assertEquals(expectedGrade2, courseGrade.getValue(),"course grades");
+	}
+	
+	@Test//(expected = SizeException.class)
+	public void weightedTotalStrategyCalculate_NegativeWeights()
+	{
+		courseWeights.put("PAs", -1.0);
+		GradingStrategy courseStrategy = new WeightedTotalStrategy(courseWeights);
+		
+		//grades.add(new Grade("PAs", null));
+		// Calculate the final grade
+		Grade courseGrade=null;
+		try {
+			courseGrade = courseStrategy.calculate("Course Grade", grades);
+			
+		} catch (SizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Double expectedGrade= 43.5;
+		assertEquals(expectedGrade, courseGrade.getValue(),"course grades");
+		
+	}
+	
 	
 	@Test
 	public void missingDoubleTest()
@@ -103,12 +158,7 @@ class TestSuites {
 	public void dropFilterTest()
 	{
 		DropFilter d = new DropFilter(true, false);
-		ArrayList<Grade> grades = new ArrayList<Grade>();
-		grades.add(new Grade("PAs", 93.0));
-		grades.add(new Grade("HWs", 50.0));
-		grades.add(new Grade("Midterm",80.0));
-		grades.add(new Grade("Final",  75.0));
-		
+				
 		ArrayList<Grade> eGrades = new ArrayList<Grade>();
 		eGrades.add(new Grade("PAs", 93.0));
 		//eGrades.add(new Grade("HWs", 50.0));
