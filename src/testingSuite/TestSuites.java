@@ -8,6 +8,8 @@ import java.util.HashMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import app.Gradient;
+import grading.DropFilter;
 import grading.Grade;
 import grading.GradingStrategy;
 import grading.SizeException;
@@ -70,6 +72,31 @@ class TestSuites {
 				Assertions.assertThrows(SizeException.class, () -> {
 					courseStrategy.calculate("Course Grade", grades);
 				  });
+	}
+	
+	@Test
+	public void dropFilterTest()
+	{
+		DropFilter d = new DropFilter(true, false);
+		ArrayList<Grade> grades = new ArrayList<Grade>();
+		grades.add(new Grade("PAs", 93.0));
+		grades.add(new Grade("HWs", 50.0));
+		grades.add(new Grade("Midterm",80.0));
+		grades.add(new Grade("Final",  75.0));
+		
+		ArrayList<Grade> eGrades = new ArrayList<Grade>();
+		eGrades.add(new Grade("PAs", 93.0));
+		//eGrades.add(new Grade("HWs", 50.0));
+		eGrades.add(new Grade("Midterm",80.0));
+		eGrades.add(new Grade("Final",  75.0));
+		
+		try {
+			assertEquals(eGrades, d.apply(grades),"");
+		} catch (SizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
