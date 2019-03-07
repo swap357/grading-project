@@ -3,6 +3,7 @@ package testingSuite;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Assertions;
@@ -89,9 +90,10 @@ class TestSuites {
 		//eGrades.add(new Grade("HWs", 50.0));
 		eGrades.add(new Grade("Midterm",80.0));
 		eGrades.add(new Grade("Final",  75.0));
+		Collections.sort(eGrades);
 		
 		try {
-			assertEquals(eGrades, d.apply(grades),"");
+			assertEquals(eGrades, d.apply(grades),"drop filter working");
 		} catch (SizeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
