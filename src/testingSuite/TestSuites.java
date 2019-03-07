@@ -13,6 +13,7 @@ import app.Gradient;
 import grading.DropFilter;
 import grading.Grade;
 import grading.GradingStrategy;
+import grading.Missing;
 import grading.SizeException;
 import grading.WeightedTotalStrategy;
 
@@ -73,6 +74,29 @@ class TestSuites {
 				Assertions.assertThrows(SizeException.class, () -> {
 					courseStrategy.calculate("Course Grade", grades);
 				  });
+	}
+	
+	@Test
+	public void missingDoubleTest()
+	{
+		double expectedNumber=0.0;
+		Double number=null;
+		// when expectedNumber is not null, it should return same number.
+		assertEquals(expectedNumber,Missing.doubleValue(expectedNumber));
+		// when number passed is null, we expect the value returned should be 0.0
+		assertEquals(expectedNumber,Missing.doubleValue(number));
+	}
+	
+	@Test
+	public void missingArguDoubleTest()
+	{
+		double expectedNumber=1.0;
+		Double number=null;
+		// when number is null, the it should return the number passed in second argument.
+		assertEquals(expectedNumber,Missing.doubleValue(number,expectedNumber));
+		number = 10.0;
+		//when the number is not null, it should return same number.
+		assertEquals(number.doubleValue(),Missing.doubleValue(number,expectedNumber));
 	}
 	
 	@Test
