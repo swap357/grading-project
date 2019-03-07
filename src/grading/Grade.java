@@ -30,7 +30,7 @@ public class Grade implements Comparable<Grade>{
 	
 	@Override
 	public String toString() {
-		return "Grade [key=" + key + ", value=" + value + "]";
+		return key +": " + value;
 	}
 
 	@Override
