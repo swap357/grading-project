@@ -1,6 +1,6 @@
 package testingSuite;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,6 @@ import java.util.HashMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import app.Gradient;
 import grading.Grade;
 import grading.GradingStrategy;
 import grading.SizeException;
@@ -21,14 +20,18 @@ class TestSuites {
 	{
 		// Create the weights and strategy for the course grade
 		HashMap<String, Double> courseWeights = new HashMap<String, Double>();
+		//courseWeights.put("PAs",     null);
 		courseWeights.put("PAs",     0.4);
 		courseWeights.put("HWs",     0.1);
 		courseWeights.put("Midterm", 0.2);
 		courseWeights.put("Final",   0.3);
 		GradingStrategy courseStrategy = new WeightedTotalStrategy(courseWeights);
 		
+		//GradingStrategy courseStrategy = new WeightedTotalStrategy();
+		
 		// Put all of the grades in a List
 		ArrayList<Grade> grades = new ArrayList<Grade>();
+		//grades.add(new Grade("PAs", null));
 		grades.add(new Grade("PAs", 93.0));
 		grades.add(new Grade("HWs", 50.0));
 		grades.add(new Grade("Midterm",80.0));

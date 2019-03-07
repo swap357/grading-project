@@ -61,7 +61,7 @@ public class WeightedTotalStrategy implements GradingStrategy {
 				}
 				
 				
-				//2.4.2. If the weight for a particular grade is unspecified(i.e NULL), then it must be assigned to 1.0
+				//2.4.2. If the weight for a particular grade is unspecified(i.e NULL), then it must be assigned to 0.0
 				tempValue=Missing.doubleValue(tempValue);
 							
 				//Calculating the weighted total
